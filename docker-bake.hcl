@@ -3,11 +3,11 @@ variable "REGISTRY" {
 }
 
 variable "REGISTRY_USER" {
-    default = "ashleykza"
+    default = "NamiQ"
 }
 
 variable "APP" {
-    default = "stable-diffusion-webui"
+    default = "thinkvision"
 }
 
 variable "RELEASE" {
@@ -44,6 +44,7 @@ target "default" {
         TORCH_VERSION = "${TORCH_VERSION}+cu${CU_VERSION}"
         XFORMERS_VERSION = "0.0.23.post1+cu${CU_VERSION}"
         WEBUI_VERSION = "v1.9.0"
+	AUTOMATIC_COMMIT="6e79d5bbdea7f9f703d16855fe7fd1699dbfef7c"
         CONTROLNET_COMMIT = "eb451a007f7040288e865f96e9ee0842aa6ef91c"
         DREAMBOOTH_COMMIT = "45a12fe5950bf93205b6ef2b7511eb94052a241f"
         CIVITAI_BROWSER_PLUS_VERSION = "v3.5.4"

@@ -25,6 +25,11 @@ sync_apps() {
     rsync --remove-source-files -rlptDu /${APP}/ /workspace/${APP}/
     rm -rf /stable-diffusion-webui
 
+    # Sync application to workspace to support Network volumes
+    echo "Syncing Automatic to workspace, please wait..."
+    rsync --remove-source-files -rlptDu /automatic/ /workspace/automatic/
+    rm -rf /automatic
+
     # Sync Kohya_ss to workspace to support Network volumes
     echo "Syncing Kohya_ss to workspace, please wait..."
     rsync --remove-source-files -rlptDu /kohya_ss/ /workspace/kohya_ss/
@@ -78,6 +83,7 @@ if [ "$(printf '%s\n' "$EXISTING_VERSION" "$TEMPLATE_VERSION" | sort -V | head -
 
         # Add VENV_PATH to webui-user.sh
         sed -i "s|venv_dir=VENV_PATH|venv_dir=${VENV_PATH}\"\"|" /workspace/stable-diffusion-webui/webui-user.sh
+        sed -i "s|venv_dir=VENV_PATH|venv_dir=${VENV_PATH}\"\"|" /workspace/automatic/webui-user.sh
 
         # Configure accelerate
         echo "Configuring accelerate..."
@@ -106,6 +112,10 @@ then
     echo "   ---------------------------------------------"
     echo "   /start_a1111.sh"
     echo ""
+    echo "   Automatic SDNext:"
+    echo "   ---------------------------------------------"
+    echo "   /start_automatic.sh"
+    echo ""
     echo "   Kohya_ss"
     echo "   ---------------------------------------------"
     echo "   /start_kohya.sh"
@@ -115,6 +125,7 @@ then
     echo "   /start_comfyui.sh"
 else
     /start_a1111.sh
+    /start_automatic.sh
     /start_kohya.sh
     /start_comfyui.sh
 fi

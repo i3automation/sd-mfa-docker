@@ -20,6 +20,12 @@ RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git && \
     cd /stable-diffusion-webui && \
     git checkout tags/${WEBUI_VERSION}
 
+ARG AUTOMATIC_COMMIT
+RUN git clone https://github.com/vladmandic/automatic.git && \
+    cd /automatic && \
+    git checkout ${AUTOMATIC_COMMIT} && \
+    git submodule update --init --recursive
+
 ARG TORCH_VERSION
 ARG XFORMERS_VERSION
 ARG INDEX_URL
@@ -176,8 +182,12 @@ RUN git clone https://github.com/ashleykleynhans/civitai-downloader.git && \
 # Copy Stable Diffusion Web UI config files
 COPY a1111/relauncher.py a1111/webui-user.sh a1111/config.json a1111/ui-config.json /stable-diffusion-webui/
 
+# Copy Automatic SDNext config files
+COPY automatic/relauncher.py automatic/webui-user.sh /automatic/
+
 # ADD SDXL styles.csv
 ADD https://raw.githubusercontent.com/Douleb/SDXL-750-Styles-GPT4-/main/styles.csv /stable-diffusion-webui/styles.csv
+ADD https://raw.githubusercontent.com/Douleb/SDXL-750-Styles-GPT4-/main/styles.csv /automatic/styles.csv
 
 # Copy ComfyUI Extra Model Paths (to share models with A1111)
 COPY comfyui/extra_model_paths.yaml /ComfyUI/
