@@ -3,7 +3,7 @@ variable "REGISTRY" {
 }
 
 variable "REGISTRY_USER" {
-    default = "NamiQ"
+    default = "namiq"
 }
 
 variable "APP" {
